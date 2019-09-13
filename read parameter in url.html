@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demonstrating read parameter in url</title>
+	
+</head>
+<body>
+<div> test</div>
+<script type="text/javascript">
+	var finaldata={};
+	console.log(window);
+	console.log(window.location.href);
+	var data=window.location.href.replace(/.*\?/,'');
+	console.log(data);
+	var result=data.split('&');
+	console.log(result);
+	for (var i = 0; i < result.length; i++) {
+		var empdata=result[i].split('=');
+		console.log(empdata);
+		finaldata[empdata[0]]=empdata[1]
+	}
+	console.log(finaldata);
+	console.log(finaldata.age);
+</script>
+</body>
+</html>
