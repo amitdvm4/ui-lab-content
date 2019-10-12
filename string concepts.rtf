@@ -1,0 +1,1037 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 6.3.9600}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 Rearrange the characters of the string such that no two adjacent characters are consecutive English alphabets\par
+Given string str of size N consists of lower-case English alphabets. The task is to find the arrangement of the characters of the string such that no two adjacent characters are neighbors in English alphabets. In case of multiple answers print any of them. If no such arrangement is possible then print -1.\par
+\par
+Examples:\par
+\par
+Input: str = \ldblquote aabcd\rdblquote\par
+Output: bdaac\par
+No two adjacent characters are neighbours in English alphabets.\par
+Input: str = \ldblquote aab\rdblquote\par
+Output: -1\par
+\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach: Traverse through the string and store all odd positioned characters in a string odd and even positioned characters in another string even i.e. every two consecutive characters in both the strings will have an absolute difference in ASCII values of at least 2. Then sort both the strings. Now, if any of the concatenation (even + odd) or (odd + even) is valid then print the valid arrangement else it is not possible to rearrange the string in the required way.\par
+\par
+Below// C++ implementation of the approach \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+\par
+// Function that returns true if the \par
+// current arrangement is valid \par
+bool check(string s) \par
+\{ \par
+\tab for (int i = 0; i + 1 < s.size(); ++i) \par
+\tab\tab if (abs(s[i] - s[i + 1]) == 1) \par
+\tab\tab\tab return false; \par
+\tab return true; \par
+\} \par
+\par
+// Function to rearrange the characters of \par
+// the string such that no two neighbours \par
+// in the English alphabets appear together \par
+void Rearrange(string str) \par
+\{ \par
+\tab // To store the odd and the \par
+\tab // even positioned characters \par
+\tab string odd = "", even = ""; \par
+\par
+\tab // Traverse through the array \par
+\tab for (int i = 0; i < str.size(); ++i) \{ \par
+\tab\tab if (str[i] % 2 == 0) \par
+\tab\tab\tab even += str[i]; \par
+\tab\tab else\par
+\tab\tab\tab odd += str[i]; \par
+\tab\} \par
+\par
+\tab // Sort both the strings \par
+\tab sort(odd.begin(), odd.end()); \par
+\tab sort(even.begin(), even.end()); \par
+\par
+\tab // Check possibilities \par
+\tab if (check(odd + even)) \par
+\tab\tab cout << odd + even; \par
+\tab else if (check(even + odd)) \par
+\tab\tab cout << even + odd; \par
+\tab else\par
+\tab\tab cout << -1; \par
+\} \par
+\par
+// Driver code \par
+int main() \par
+\{ \par
+\tab string str = "aabcd"; \par
+\par
+\tab Rearrange(str); \par
+\par
+\tab return 0; \par
+\}  is the implementation of the above approach:\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Rearrange characters in a string such that no two adjacent are same\par
+Rearrange characters in a string such that no two adjacent are same using hashing\par
+Permutation of a string with maximum number of characters greater than its adjacent characters\par
+String with k distinct characters and no same characters adjacent\par
+Remove all characters other than alphabets from string\par
+Rearrange a string so that all same characters become d distance away\par
+Rearrange a string so that all same characters become atleast d distance away\par
+Minimum characters that are to be inserted such that no three consecutive characters are same\par
+Group consecutive characters of same type in a string\par
+Reduce the string by removing K consecutive identical characters\par
+Minimum replacements to make adjacent characters unequal in a ternary string\par
+Minimum replacements to make adjacent characters unequal in a ternary string | Set-2\par
+Count characters at same position as in English alphabet\par
+Min flips of continuous characters to make all characters same in a string\par
+Rearrange characters to form palindrome if possible\par
+\par
+\par
+{{\field{\*\fldinst{HYPERLINK https://www.geeksforgeeks.org }}{\fldrslt{https://www.geeksforgeeks.org\ul0\cf0}}}}\f0\fs22\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Count Pairs from two arrays with even sum\par
+Given two arrays A[] and B[] of N and M integers respectively. The task is to count the number of unordered pairs formed by choosing an element from array A[] and other from array B[] in such a way that their sum is an even number.\par
+Note that an element will only be a part of a single pair.\par
+\par
+Examples:\par
+\par
+Input: A[] = \{9, 14, 6, 2, 11\}, B[] = \{8, 4, 7, 20\}\par
+Output: 4\par
+\{9, 7\}, \{14, 8\}, \{6, 4\} and \{2, 20\} are the valid pairs.\par
+\par
+Input: A[] = \{2, 4, 6\}, B[] = \{8, 10, 12\}\par
+Output: 3\par
+\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach: Count the number of odd and even numbers in both the arrays and the answer to the number of pairs will be min(odd1, odd2) + min(even1, even2) because (odd + odd) = even and (even + even) = even.\par
+\par
+Below is the implementation of the above approach:\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// C++ implementation of the approach \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to return count of required pairs \par
+int count_pairs(int a[], int b[], int n, int m) \par
+\{ \par
+  \par
+    // Count of odd and even numbers \par
+    // from both the arrays \par
+    int odd1 = 0, even1 = 0; \par
+    int odd2 = 0, even2 = 0; \par
+  \par
+    // Find the count of odd and \par
+    // even elements in a[] \par
+    for (int i = 0; i < n; i++) \{ \par
+        if (a[i] % 2 == 1) \par
+            odd1++; \par
+        else\par
+            even1++; \par
+    \} \par
+  \par
+    // Find the count of odd and \par
+    // even elements in b[] \par
+    for (int i = 0; i < m; i++) \{ \par
+        if (b[i] % 2 == 1) \par
+            odd2++; \par
+        else\par
+            even2++; \par
+    \} \par
+  \par
+    // Count the number of pairs \par
+    int pairs = min(odd1, odd2) + min(even1, even2); \par
+  \par
+    // Return the number of pairs \par
+    return pairs; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int a[] = \{ 9, 14, 6, 2, 11 \}; \par
+    int b[] = \{ 8, 4, 7, 20 \}; \par
+    int n = sizeof(a) / sizeof(a[0]); \par
+    int m = sizeof(b) / sizeof(b[0]); \par
+    cout << count_pairs(a, b, n, m); \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+4\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Given two arrays count all pairs whose sum is an odd number\par
+Count pairs from two arrays having sum equal to K\par
+Count pairs from two sorted arrays whose sum is equal to a given value x\par
+Count distinct pairs from two arrays having same sum of digits\par
+Count equal pairs from given string arrays\par
+Count of pairs between two arrays such that the sums are distinct\par
+Count pairs from two arrays whose modulo operation yields K\par
+Count pairs formed by distinct element sub-arrays\par
+Given two unsorted arrays, find all pairs whose sum is x\par
+Maximizing Unique Pairs from two arrays\par
+Minimum sum of absolute difference of pairs of two arrays\par
+Find k pairs with smallest sums in two arrays\par
+Distinct pairs from given arrays (a[i], b[j]) such that (a[i] + b[j]) is a Fibonacci number\par
+Total distinct pairs of ugly numbers from two arrays\par
+Count all pairs with given XOR\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Find the longest string that can be made up of other strings from the array\par
+Find minimum difference between any two elements | Set 2\par
+Partition an array of non-negative integers into two subsets such that average of both the subsets is equal\par
+Count of integers of length N and value less than K such that they contain digits only from the given set\par
+Number of subsets with zero sum\par
+Split the given array into K sub-arrays such that maximum sum of all sub arrays is minimum\par
+Greatest contiguous sub-array of size K\par
+Remove duplicate elements in an Array using STL in C++\par
+Find the smallest positive number missing from an unsorted array | Set 3\par
+Maximum sum combination from two arrays\par
+Flip minimum signs of array elements to get minimum sum of positive elements possible\par
+Remove duplicates from unsorted array using Set data structure\par
+Pair with largest sum which is less than K in the array\par
+Maximum water that can be stored between two buildings\par
+Find the smallest positive number missing from an unsorted array : Hashing Implementation\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Count of sub-strings that do not consist of the given character\par
+Given a string str and a character c. The task is to find the number of sub-strings that do not consist of the character c.\par
+\par
+Examples:\par
+\par
+Input: str = \ldblquote baa\rdblquote , c = \lquote b\rquote\par
+Output: 3\par
+The sub-strings are \ldblquote a\rdblquote , \ldblquote a\rdblquote  and \ldblquote aa\rdblquote\par
+\par
+\par
+\par
+ \par
+\par
+Input: str = \ldblquote ababaa\rdblquote , C = \lquote b\rquote\par
+Output: 5\par
+\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach: Initially take a counter that counts the number of characters continuously with no character c. Iterate in the string and increase the counter till str[i] != c. Once str[i] == c, the number of sub-strings from the contiguous length cnt will be (cnt * (cnt + 1)) / 2. After the complete traversal of the string also add (cnt *(cnt + 1)) / 2 to the result for the group of characters appearing after the last occurrence of c.\par
+\par
+Below is the implementation of the above approach:\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// C++ implementation of the approach \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to return the number \par
+// of sub-strings that do not contain \par
+// the given character c \par
+int countSubstrings(string s, char c) \par
+\{ \par
+  \par
+    // Length of the string \par
+    int n = s.length(); \par
+  \par
+    int cnt = 0; \par
+    int sum = 0; \par
+  \par
+    // Traverse in the string \par
+    for (int i = 0; i < n; i++) \{ \par
+  \par
+        // If current character is different \par
+        // from the given character \par
+        if (s[i] != c) \par
+            cnt++; \par
+        else \{ \par
+  \par
+            // Update the number of sub-strings \par
+            sum += (cnt * (cnt + 1)) / 2; \par
+  \par
+            // Reset count to 0 \par
+            cnt = 0; \par
+        \} \par
+    \} \par
+  \par
+    // For the characters appearing \par
+    // after the last occurrence of c \par
+    sum += (cnt * (cnt + 1)) / 2; \par
+    return sum; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    string s = "baa"; \par
+    char c = 'b'; \par
+    cout << countSubstrings(s, c); \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+3\par
+\par
+\par
+ \par
+\par
+Recommended Posts:\par
+Count substrings that starts with character X and ends with character Y\par
+Count all substrings having character K\par
+Count of substrings which contains a given character K times\par
+Number of substrings with count of each character as k\par
+Count substrings with each character occurring at most k times\par
+Print Kth character in sorted concatenated substrings of a string\par
+Find the count of M character words which have at least one character repeated\par
+Count substrings that contain all vowels | SET 2\par
+Count substrings with same first and last characters\par
+Count Substrings with equal number of 0s, 1s and 2s\par
+Count of substrings of a binary string containing K ones\par
+Count of total anagram substrings\par
+Count number of substrings with exactly k distinct characters\par
+Count distinct substrings that contain some characters at most k times\par
+Count all Prime Length Palindromic Substrings\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Maximum absolute difference in an array\par
+Coin Change | BFS Approach\par
+Program to find the last two digits of x^y\par
+Count substrings that contain all vowels | SET 2\par
+Nth number whose sum of digit is multiple of 10\par
+Given two arrays count all pairs whose sum is an odd number\par
+Find maximum xor of k elements in an array\par
+Partition an array of non-negative integers into two subsets such that average of both the subsets is equal\par
+Complexity Analysis of Binary Search\par
+Count of integers of length N and value less than K such that they contain digits only from the given set\par
+New Algorithm to Generate Prime Numbers from 1 to Nth Number\par
+Check for balanced parentheses in an expression | O(1) space | O(N^2) time complexity\par
+Find the smallest positive number missing from an unsorted array | Set 3\par
+Create new linked list from two given linked list with greater element at each node\par
+Program to find the Nth Prime Number\par
+Find a triplet in an array whose sum is closest to a given number\par
+Find the minimum number of elements that should be removed to make an array good\par
+Find sub-arrays from given two arrays such that they have equal sum\par
+Find XOR of numbers from the range [L, R]\par
+Count total set bits in all numbers from 1 to n | Set 2\par
+Card Shuffle Problem | TCS Digital Advanced Coding Question\par
+Count of all possible values of X such that A % X = B\par
+Count pairs with given sum | Set 2\par
+Shortest path from source to destination such that edge weights along path are alternatively increasing and decreasing\par
+Maximum length of subarray such that sum of the subarray is even\par
+Append a digit in the end to make the number equal to the length of the remaining string\par
+Find a subarray whose sum is divisible by size of the array\par
+Count the pairs of vowels in the given string\par
+Find the Nth term divisible by a or b or c\par
+Maximum subsequence sum such that all elements are K distance apart\par
+\par
+ \par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Count of sub-strings that do not consist of the given character\par
+Given a string str and a character c. The task is to find the number of sub-strings that do not consist of the character c.\par
+\par
+Examples:\par
+\par
+Input: str = \ldblquote baa\rdblquote , c = \lquote b\rquote\par
+Output: 3\par
+The sub-strings are \ldblquote a\rdblquote , \ldblquote a\rdblquote  and \ldblquote aa\rdblquote\par
+\par
+\par
+\par
+ \par
+\par
+Input: str = \ldblquote ababaa\rdblquote , C = \lquote b\rquote\par
+Output: 5\par
+\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach: Initially take a counter that counts the number of characters continuously with no character c. Iterate in the string and increase the counter till str[i] != c. Once str[i] == c, the number of sub-strings from the contiguous length cnt will be (cnt * (cnt + 1)) / 2. After the complete traversal of the string also add (cnt *(cnt + 1)) / 2 to the result for the group of characters appearing after the last occurrence of c.\par
+\par
+Below is the implementation of the above approach:\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// C++ implementation of the approach \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to return the number \par
+// of sub-strings that do not contain \par
+// the given character c \par
+int countSubstrings(string s, char c) \par
+\{ \par
+  \par
+    // Length of the string \par
+    int n = s.length(); \par
+  \par
+    int cnt = 0; \par
+    int sum = 0; \par
+  \par
+    // Traverse in the string \par
+    for (int i = 0; i < n; i++) \{ \par
+  \par
+        // If current character is different \par
+        // from the given character \par
+        if (s[i] != c) \par
+            cnt++; \par
+        else \{ \par
+  \par
+            // Update the number of sub-strings \par
+            sum += (cnt * (cnt + 1)) / 2; \par
+  \par
+            // Reset count to 0 \par
+            cnt = 0; \par
+        \} \par
+    \} \par
+  \par
+    // For the characters appearing \par
+    // after the last occurrence of c \par
+    sum += (cnt * (cnt + 1)) / 2; \par
+    return sum; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    string s = "baa"; \par
+    char c = 'b'; \par
+    cout << countSubstrings(s, c); \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+3\par
+\par
+\par
+ \par
+\par
+Recommended Posts:\par
+Count substrings that starts with character X and ends with character Y\par
+Count all substrings having character K\par
+Count of substrings which contains a given character K times\par
+Number of substrings with count of each character as k\par
+Count substrings with each character occurring at most k times\par
+Print Kth character in sorted concatenated substrings of a string\par
+Find the count of M character words which have at least one character repeated\par
+Count substrings that contain all vowels | SET 2\par
+Count substrings with same first and last characters\par
+Count Substrings with equal number of 0s, 1s and 2s\par
+Count of substrings of a binary string containing K ones\par
+Count of total anagram substrings\par
+Count number of substrings with exactly k distinct characters\par
+Count distinct substrings that contain some characters at most k times\par
+Count all Prime Length Palindromic Substrings\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Lexicographical smallest alternate Array\par
+Given an array arr[] of distinct elements, the task is to rearrange the array such that it is lexicographically smallest and of the form arr[0] > arr[1] < arr[2] > arr[3] < \'85\par
+\par
+Examples:\par
+\par
+Input: arr[] = \{3, 2, 1, 4, 5\}\par
+Output: 2 1 4 3 5\par
+\par
+\par
+\par
+\par
+\par
+Approach: In order to get the lexicographically smallest array, we can choose the minimum element as the first element but that will not satisfy the condition where the first element has to be strictly greater than the second element.\par
+Now, the second-best choice is to choose the second minimum from the array and the only element which is smaller than it is the smallest element which will be the second element of the array.\par
+Apply the same process for the rest of the array elements, choose the second minimum of the remaining elements and then choose the minimum for every two consecutive positions which can be obtained by first sorting the given array then swapping every two consecutive elements.\par
+\par
+Below is the implementation of the above approach:\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// C++ implementation of the approach \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to print the \par
+// contents of an array \par
+void printArr(int arr[], int n) \par
+\{ \par
+    for (int i = 0; i < n; i++) \{ \par
+        cout << arr[i] << " "; \par
+    \} \par
+\} \par
+  \par
+// Function to find the lexicographically \par
+// smallest alternating array \par
+void smallestArr(int arr[], int n) \par
+\{ \par
+  \par
+    // Sort the array \par
+    sort(arr, arr + n); \par
+  \par
+    // Swap every two consecutive elements \par
+    for (int i = 0; i + 1 < n; i = i + 2) \{ \par
+        swap(arr[i], arr[i + 1]); \par
+    \} \par
+  \par
+    // Print the re-arranged array \par
+    printArr(arr, n); \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int arr[] = \{ 3, 2, 1, 4, 5 \}; \par
+    int n = sizeof(arr) / sizeof(arr[0]); \par
+  \par
+    smallestArr(arr, n); \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+2 1 4 3 5\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Recommended Posts:\par
+Find the smallest and second smallest elements in an array\par
+Maximum sum of smallest and second smallest in an array\par
+Alternate XOR operations on sorted array\par
+Rearrange an array in order - smallest, largest, 2nd smallest, 2nd largest, ..\par
+Kth smallest element in the array using constant space when array can't be modified\par
+Lexicographical Maximum substring of string\par
+Lexicographical concatenation of all substrings of a string\par
+Print all the combinations of a string in lexicographical order\par
+Find the lexicographical next balanced bracket sequence\par
+Sort the words in lexicographical order in Python\par
+Print all longest common sub-sequences in lexicographical order\par
+Smallest Pair Sum in an array\par
+Print all distinct circular strings of length M in lexicographical order\par
+Smallest greater elements in whole array\par
+Smallest perfect cube in an array\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Remove duplicates from unsorted array using Set data structure\par
+Given an unsorted array of integers, print the array after removing the duplicate elements from it. We need to print distinct array elements according to their first occurrence.\par
+\par
+Examples:\par
+\par
+Input: arr[] = \{ 1, 2, 5, 1, 7, 2, 4, 2\}\par
+Output: 1 2 5 7 4\par
+Explanation: \{1, 2\} appear more than one time.\par
+\par
+Input: arr[] = \{ 3, 3, 4, 1, 1\}\par
+Output: 3 4 1\par
+\par
+\par
+\par
+\par
+\par
+Approach:\par
+\par
+\par
+\par
+ \par
+\par
+Take a Set\par
+Insert all array element in the Set. Set does not allow duplicates and sets like LinkedHashSet maintains the order of insertion so it will remove duplicates and elements will be printed in the same order in which it is inserted.\par
+Convert the formed set into array.\par
+Print elements of Set.\par
+Below is the implementation of the above approach:\par
+\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// CPP program to remove duplicates \par
+// from unsorted array \par
+#include<bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to remove duplicate from array \par
+void removeDuplicates(int arr[], int n) \par
+\{ \par
+    set<int> s; \par
+      \par
+    // adding elements to LinkedHashSet \par
+    for (int i = 0; i < n; i++) \par
+        s.insert(arr[i]); \par
+  \par
+    // Print the elements of LinkedHashSet \par
+    cout << "[ "; \par
+    for(auto x:s) \par
+    cout << x << " "; \par
+    cout << "]"; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int arr[] = \{ 1, 2, 5, 1, 7, 2, 4, 2 \}; \par
+    int n = sizeof(arr) / sizeof(arr[0]); \par
+    removeDuplicates(arr, n); \par
+\} \par
+  \par
+// This code is contributed  \par
+// by Surendra_Gangwar \par
+Output:\par
+[1, 2, 5, 7, 4]\par
+Time Complexity: O(N)\par
+\par
+\par
+\par
+ \par
+\par
+Recommended Posts:\par
+Remove duplicates from unsorted array using Map data structure\par
+Remove duplicates from sorted array\par
+Remove duplicates from an array of small primes\par
+Static Data Structure vs Dynamic Data Structure\par
+How to Remove Duplicates from ArrayList in Java\par
+Recursively remove all adjacent duplicates\par
+Why is it faster to process sorted array than an unsorted array ?\par
+k-th missing element in an unsorted array\par
+Program for Mean and median of an unsorted array\par
+A data structure for n elements and O(1) operations\par
+Find k closest numbers in an unsorted array\par
+Print all pairs in an unsorted array with equal sum\par
+Find the two numbers with odd occurrences in an unsorted array\par
+Front and Back Search in unsorted array\par
+K'th Smallest/Largest Element in Unsorted Array | Set 1\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Find the smallest positive number missing from an unsorted array : Hashing Implementation\par
+Given an unsorted array with both positive and negative elements including 0. The task is to find the smallest positive number missing from the array in O(N) time.\par
+\par
+Examples:\par
+\par
+Input: arr[] = \{-5, 2, 0, -1, -10, 15\}\par
+Output: 1\par
+\par
+Input: arr[] = \{0, 1, 2, 3, 4, 5\}\par
+Output: 6\par
+\par
+Input: arr[] = \{1, 1, 1, 0, -1, -2\}\par
+Output: 2\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+We can use hashing to solve this problem. The idea is to build a hash table of all positive elements in the given array. Once the hash table is built. We can look in the hash table for all positive integers, starting from 1. As soon as we find a number which is not there in the hash table, we return it.\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+We can use the unordered_map in C++ to implement the hash which allow to perform look up operation in almost O(1) time complexity.\par
+\par
+Below is the implementation of the above approach:\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// C++ program to find the smallest \par
+// positive missing number \par
+  \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to find the smallest positive \par
+// missing number \par
+int missingNumber(int a[], int n) \par
+\{ \par
+    // Declaring an unordered_map \par
+    unordered_map<int, int> mp; \par
+  \par
+    // if array value is positive \par
+    // store it in map \par
+    for (int i = 0; i < n; i++) \{ \par
+        if (a[i] > 0) \par
+            mp[a[i]]++; \par
+    \} \par
+  \par
+    // index value set to 1 \par
+    int index = 1; \par
+  \par
+    // Return the first value starting \par
+    // from 1 which does not exists in map \par
+    while (1) \{ \par
+        if (mp.find(index) == mp.end()) \{ \par
+            return index; \par
+        \} \par
+  \par
+        index++; \par
+    \} \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int a[] = \{ 1, 1, 1, 0, -1, -2 \}; \par
+    int size = sizeof(a) / sizeof(a[0]); \par
+  \par
+    cout << "Smallest positive missing number is : "\par
+         << missingNumber(a, size) << endl; \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+Smallest positive missing number is : 2\par
+Time Complexity: O(N)\par
+Auxiliary Space: O(N)\par
+\par
+\par
+Find the smallest positive number missing from an unsorted array | Set 3\par
+Find the smallest positive number missing from an unsorted array | Set 2\par
+Find the smallest positive number missing from an unsorted array | Set 1\par
+Find the smallest missing number\par
+Smallest prime number missing in an array\par
+Find the smallest positive integer value that cannot be represented as sum of any subset of a given array\par
+Find the smallest positive number which can not be represented by given digits\par
+k-th missing element in an unsorted array\par
+Find missing number in another array which is shuffled copy\par
+Find the missing number in a sorted array of limited range\par
+K'th Smallest/Largest Element in Unsorted Array | Set 1\par
+kth smallest/largest in a small range unsorted array\par
+K'th Smallest/Largest Element in Unsorted Array | Set 2 (Expected Linear Time)\par
+K'th Smallest/Largest Element in Unsorted Array | Set 3 (Worst Case Linear Time)\par
+Find the missing integer in an array if mean is given\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Remove duplicates from unsorted array using Set data structure\par
+Given an unsorted array of integers, print the array after removing the duplicate elements from it. We need to print distinct array elements according to their first occurrence.\par
+\par
+Examples:\par
+\par
+Input: arr[] = \{ 1, 2, 5, 1, 7, 2, 4, 2\}\par
+Output: 1 2 5 7 4\par
+Explanation: \{1, 2\} appear more than one time.\par
+\par
+Input: arr[] = \{ 3, 3, 4, 1, 1\}\par
+Output: 3 4 1\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach:\par
+\par
+\par
+Take a Set\par
+Insert all array element in the Set. Set does not allow duplicates and sets like LinkedHashSet maintains the order of insertion so it will remove duplicates and elements will be printed in the same order in which it is inserted.\par
+Convert the formed set into array.\par
+Print elements of Set.\par
+Below is the implementation of the above approach:\par
+\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// CPP program to remove duplicates \par
+// from unsorted array \par
+#include<bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to remove duplicate from array \par
+void removeDuplicates(int arr[], int n) \par
+\{ \par
+    set<int> s; \par
+      \par
+    // adding elements to LinkedHashSet \par
+    for (int i = 0; i < n; i++) \par
+        s.insert(arr[i]); \par
+  \par
+    // Print the elements of LinkedHashSet \par
+    cout << "[ "; \par
+    for(auto x:s) \par
+    cout << x << " "; \par
+    cout << "]"; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int arr[] = \{ 1, 2, 5, 1, 7, 2, 4, 2 \}; \par
+    int n = sizeof(arr) / sizeof(arr[0]); \par
+    removeDuplicates(arr, n); \par
+\} \par
+  \par
+// This code is contributed  \par
+// by Surendra_Gangwar \par
+Output:\par
+[1, 2, 5, 7, 4]\par
+Time Complexity: O(N)\par
+\par
+\par
+\par
+\par
+\par
+\par
+Recommended Posts:\par
+Remove duplicates from unsorted array using Map data structure\par
+Remove duplicates from sorted array\par
+Remove duplicates from an array of small primes\par
+Static Data Structure vs Dynamic Data Structure\par
+How to Remove Duplicates from ArrayList in Java\par
+Recursively remove all adjacent duplicates\par
+Why is it faster to process sorted array than an unsorted array ?\par
+k-th missing element in an unsorted array\par
+Program for Mean and median of an unsorted array\par
+A data structure for n elements and O(1) operations\par
+Find k closest numbers in an unsorted array\par
+Print all pairs in an unsorted array with equal sum\par
+Find the two numbers with odd occurrences in an unsorted array\par
+Front and Back Search in unsorted array\par
+K'th Smallest/Largest Element in Unsorted Array | Set 1\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+Find the smallest positive number missing from an unsorted array | Set 3\par
+Given an unsorted array with both positive and negative elements. The task is to find the smallest positive number missing from the array.\par
+\par
+Examples:\par
+\par
+Input: arr[] = \{2, 3, 7, 6, 8, -1, -10, 15\}\par
+Output: 1\par
+\par
+\par
+\par
+\par
+\par
+\par
+Input: arr[] = \{ 2, 3, -7, 6, 8, 1, -10, 15 \}\par
+Output: 4\par
+\par
+Input: arr[] = \{1, 1, 0, -1, -2\}\par
+Output: 2\par
+\par
+Recommended: Please try your approach on \{IDE\} first, before moving on to the solution.\par
+Approach :\par
+We have already discussed some of the techniques to find the smallest positive number missing from an unsorted array.\par
+\par
+Find the smallest positive number missing from an unsorted array | Set 1\par
+Find the smallest positive number missing from an unsorted array | Set 2\par
+\par
+Here, we use set to store all positive integers and find the first missing positive integer.\par
+filter_none\par
+edit\par
+play_arrow\par
+\par
+brightness_4\par
+// CPP program to find the smallest \par
+// positive missing number \par
+#include <bits/stdc++.h> \par
+using namespace std; \par
+  \par
+// Function to find the smallest \par
+// positive missing number \par
+int findMissingPositive(int arr[], int n) \par
+\{ \par
+    // Default smallest Positive Integer \par
+    int m = 1; \par
+  \par
+    // Store values in set which are \par
+    // greater than variable m \par
+    set<int> x; \par
+  \par
+    for (int i = 0; i < n; i++) \{ \par
+        // Store value when m is less than \par
+        // current index of given array \par
+        if (m < arr[i]) \{ \par
+            x.insert(arr[i]); \par
+        \} \par
+        else if (m == arr[i]) \{ \par
+            // Increment m when it is equal \par
+            // to current element \par
+            m = m + 1; \par
+  \par
+            while (x.count(m)) \{ \par
+                x.erase(m); \par
+  \par
+                // Increment m when it is one of the \par
+                // element of the set \par
+                m = m + 1; \par
+            \} \par
+        \} \par
+    \} \par
+  \par
+    // Return the required answer \par
+    return m; \par
+\} \par
+  \par
+// Driver code \par
+int main() \par
+\{ \par
+    int arr[] = \{ 2, 3, -7, 6, 8, 1, -10, 15 \}; \par
+  \par
+    int n = sizeof(arr) / sizeof(arr[0]); \par
+  \par
+    // Function call \par
+    cout << findMissingPositive(arr, n); \par
+  \par
+    return 0; \par
+\} \par
+Output:\par
+4\par
+\par
+\par
+\par
+\par
+Find the smallest positive number missing from an unsorted array | Set 1\par
+Find the smallest positive number missing from an unsorted array | Set 2\par
+Find the smallest positive number missing from an unsorted array : Hashing Implementation\par
+Find the smallest missing number\par
+Smallest prime number missing in an array\par
+Find smallest positive number Y such that Bitwise AND of X and Y is Zero\par
+Find the smallest positive integer value that cannot be represented as sum of any subset of a given array\par
+Find the smallest positive number which can not be represented by given digits\par
+k-th missing element in an unsorted array\par
+Find missing number in another array which is shuffled copy\par
+Find the missing number in a sorted array of limited range\par
+K'th Smallest/Largest Element in Unsorted Array | Set 1\par
+kth smallest/largest in a small range unsorted array\par
+K'th Smallest/Largest Element in Unsorted Array | Set 2 (Expected Linear Time)\par
+K'th Smallest/Largest Element in Unsorted Array | Set 3 (Worst Case Linear Time)\par
+\par
+}
+ 
